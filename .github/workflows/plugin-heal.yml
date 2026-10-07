@@ -30,7 +30,7 @@ jobs:
             echo "len_before=${#BASE}" 
             BASE="$(printf '%s' "${BASE%/}" | tr -d '[:space:]')"  
             echo "len_after=${#BASE}"
-            printf '%s' "$BASE" | LC_ALL=C od -An -tx1 | tr ' ' '\n' | grep -v '^$' | sort -u \     | awk 'strtonum("0x"$1) > 126 {print "non-ASCII byte:", $1}'
+            printf '%s' "$BASE" | LC_ALL=C od -An -tx1 
             echo "=== reinstalling $id ==="  
             curl -sS -v -w "\nHTTP %{http_code}\n" -X POST \  
               -H "Authorization: Bearer $KEY" \  
