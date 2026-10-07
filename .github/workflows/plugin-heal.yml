@@ -1,0 +1,29 @@
+name: heal-plugins  
+  
+on:  
+  schedule:  
+    - cron: "*/10 * * * *"   # 每10分钟检查一次（UTC 时间）  
+  workflow_dispatch:          # 在 Actions 页面手动触发  
+  
+jobs:  
+  heal:  
+    runs-on: ubuntu-latest  
+    steps:  
+      - name: Reinstall unregistered plugins  
+        env:  
+          BASE: ${{ secrets.CPA_BASE_URL }}  
+          KEY:  ${{ secrets.CPA_MANAGEMENT_KEY }}  
+        run: |  
+          set -e  
+          resp=$(curl -sf -H "Authorization: Bearer $KEY" "$BASE/v0/management/plugins")  
+          echo "$resp" | jq .  
+          ids=$(echo "$resp" | jq -r '.plugins[] | select(.configured and .enabled and (.registered|not)) | .id')  
+          if [ -z "$ids" ]; then  
+            echo "all plugins healthy"  
+            exit 0  
+          fi  
+          for id in $ids; do  
+            echo "=== reinstalling $id ==="  
+            curl -sf -X POST -H "Authorization: Bearer $KEY" \  
+              "$BASE/v0/management/plugin-store/$id/install" | jq .  
+          done
