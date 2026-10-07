@@ -28,6 +28,8 @@ jobs:
             echo "BASE len=${#BASE} KEY len=${#KEY}"
             echo "scheme=[${BASE:0:8}]"
             echo "len_before=${#BASE}" 
+            BASE="$(printf '%s' "${BASE%/}" | tr -d '[:space:]')"  
+            echo "len_after=${#BASE}"
             echo "=== reinstalling $id ==="  
             curl -sS -v -w "\nHTTP %{http_code}\n" -X POST \  
               -H "Authorization: Bearer $KEY" \  
