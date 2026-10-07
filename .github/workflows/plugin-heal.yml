@@ -24,6 +24,7 @@ jobs:
           fi  
           for id in $ids; do  
             echo "=== reinstalling $id ==="  
-            curl -sf -X POST -H "Authorization: Bearer $KEY" \  
-              "$BASE/v0/management/plugin-store/$id/install" | jq .  
+            curl -s -w "\nHTTP %{http_code}\n" -X POST \  
+              -H "Authorization: Bearer $KEY" \  
+              "$BASE/v0/management/plugin-store/$id/install"  
           done
