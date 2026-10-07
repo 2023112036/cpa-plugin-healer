@@ -23,7 +23,9 @@ jobs:
             exit 0  
           fi  
           for id in $ids; do  
-            printf 'id bytes: '; printf '%s' "$id" | od -c | head -1  
+            printf '%s' "$id" | od -An -c 
+            printf 'URL=[%q]\n' "$BASE/v0/management/plugin-store/$id/install"  
+            echo "BASE len=${#BASE} KEY len=${#KEY}"
             echo "=== reinstalling $id ==="  
             curl -s -w "\nHTTP %{http_code}\n" -X POST \  
               -H "Authorization: Bearer $KEY" \  
