@@ -23,6 +23,7 @@ jobs:
             exit 0  
           fi  
           for id in $ids; do  
+            printf 'id bytes: '; printf '%s' "$id" | od -c | head -1  
             echo "=== reinstalling $id ==="  
             curl -s -w "\nHTTP %{http_code}\n" -X POST \  
               -H "Authorization: Bearer $KEY" \  
