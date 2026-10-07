@@ -34,3 +34,6 @@ jobs:
             echo "=== reinstalling $id ==="  
             curl -sS -v -w "\nHTTP %{http_code}\n" -X POST -H "Authorization: Bearer $KEY"  "$BASE/v0/management/plugin-store/$id/install"  
           done
+          echo "=== final status ==="  
+          sleep 10  
+          curl -sS -H "Authorization: Bearer $KEY" "$BASE/v0/management/plugins" | jq -r '.plugins[] | "\(.id): path=\(.path) registered=\(.registered) effective=\(.effective_enabled)"'
