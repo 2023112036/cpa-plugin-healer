@@ -32,7 +32,5 @@ jobs:
             echo "len_after=${#BASE}"
             printf '%s' "$BASE" | LC_ALL=C od -An -tx1 
             echo "=== reinstalling $id ==="  
-            curl -sS -v -w "\nHTTP %{http_code}\n" -X POST \  
-              -H "Authorization: Bearer $KEY" \  
-              "$BASE/v0/management/plugin-store/$id/install"  
+            curl -sS -v -w "\nHTTP %{http_code}\n" -X POST -H "Authorization: Bearer $KEY"  "$BASE/v0/management/plugin-store/$id/install"  
           done
