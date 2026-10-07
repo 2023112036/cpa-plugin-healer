@@ -2,7 +2,7 @@ name: heal-plugins
   
 on:  
   schedule:  
-    - cron: "*/10 * * * *"   # 每10分钟检查一次（UTC 时间）  
+    - cron: "0 */6 * * *"  
   workflow_dispatch:          # 在 Actions 页面手动触发  
   
 jobs:  
