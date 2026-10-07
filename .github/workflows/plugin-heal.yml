@@ -27,7 +27,7 @@ jobs:
             printf 'URL=[%q]\n' "$BASE/v0/management/plugin-store/$id/install"  
             echo "BASE len=${#BASE} KEY len=${#KEY}"
             echo "=== reinstalling $id ==="  
-            curl -s -w "\nHTTP %{http_code}\n" -X POST \  
+            curl -sS -v -w "\nHTTP %{http_code}\n" -X POST \  
               -H "Authorization: Bearer $KEY" \  
               "$BASE/v0/management/plugin-store/$id/install"  
           done
